@@ -4,3 +4,4 @@ obj
 Assembly-CSharp.csproj
 *.csproj
 GameOfLife.sln
+/Temp

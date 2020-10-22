@@ -15,7 +15,7 @@ public class GameOfLife2D : MonoBehaviour
     public int[,] gameArrayNextGen = new int[0, 0]; // an array to hold the state data for each cell in the grid for the next generation of the game
     public GameObject[,] cellGameObjects = new GameObject[0, 0]; // an array to hold references to each gameobject that make up grid
     public SpriteRenderer[,] cellSpriteRenderers = new SpriteRenderer[0, 0]; // an array to hold references to the sprite renderer component attached to each gameobject
-    public gameRunning = false; // bool controlling whether the game is currently running
+    public bool gameRunning = false; // bool controlling whether the game is currently running
 
     [Range(0.01f, 3f)]
     public float updateRate; // used to define how often will the game update (in seconds)
@@ -24,7 +24,7 @@ public class GameOfLife2D : MonoBehaviour
     private Camera gameCamera; // the game camera pointing at the board
 
     // Awake is a built-in Unity function that is only called once, before the Start function
-    private void Awake(
+    private void Awake()
     {
         // find the camera in the scene and store it for later
         gameCamera = FindObjectOfType<Camera>();
@@ -35,7 +35,7 @@ public class GameOfLife2D : MonoBehaviour
     {
         CreateGrid(gridSizeX, gridSizeY);
         PauseGame(true);
-        UpdateGridVisuals()
+        UpdateGridVisuals();
     }
 
     // this function controls whether or not to pause the game
@@ -46,12 +46,12 @@ public class GameOfLife2D : MonoBehaviour
         {
             gameRunning = false;
             gameRunningText.text = "Game Paused";
-            gameRunningText.color = Colour.red;
+            gameRunningText.color = Color.red;
         }
         else // else if setGamePause is false unpause the game
         {
             gameRunning = true;
-            gameRunningText.text = Game Running;
+            gameRunningText.text = "Game Running";
             gameRunningText.color = Color.green;
         }
     }
@@ -68,7 +68,7 @@ public class GameOfLife2D : MonoBehaviour
                 GameObject cell = hit.collider.gameObject;
 
                 // search through every cell in the cell array of gameObjects until the one that was clicked is found
-                for (int xCount = ; xCount < gridSizeX; xCount++)
+                for (int xCount = 0; xCount < gridSizeX; xCount++)
                 {
                     for (int yCount = 0; yCount < gridSizeY; yCount++)
                     {
@@ -97,7 +97,7 @@ public class GameOfLife2D : MonoBehaviour
         }
 
         // check if the C key has been pressed. this key will clear the grid and pause the game
-        if (InputGetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             PauseGame(true);
 
@@ -119,7 +119,7 @@ public class GameOfLife2D : MonoBehaviour
             {
                 for (int yCount = 0; yCount < gridSizeY; yCount++)
                 {
-                    gameArray[xCount, yCount] = UnityEngine.Random.Range(0, 2];
+                    gameArray[xCount, yCount] = UnityEngine.Random.Range(0, 2);
                 }
             }
         }
@@ -138,12 +138,12 @@ public class GameOfLife2D : MonoBehaviour
         else
         {
             UpdateCells();
-            _gameTimer = f;
+            _gameTimer = 0f;
         }
     }
 
     // set the alive or dead state of a specified cell
-    public void SwitchCellState(x int, y int)
+    public void SwitchCellState(int x, int y)
     {
         // if the cell is alive, switch it to dead
         if (gameArray[x, y] == 1)
@@ -178,13 +178,13 @@ public class GameOfLife2D : MonoBehaviour
                     }
                     else // if the cell doesn't die from underpopulation or overpopulation, assign it to be alive for the next generation of the game
                     {
-                        gameArrayNextGen[xCount yCount] = 1;
+                        gameArrayNextGen[xCount, yCount] = 1;
                     }
                 }
                 else // the cell is currently dead
                 {
                     // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
-                    if (aliveNeighbourCells = 3)
+                    if (aliveNeighbourCells == 3)
                     {
                         gameArrayNextGen[xCount, yCount] = 1;
                     }
@@ -207,7 +207,7 @@ public class GameOfLife2D : MonoBehaviour
     }
 
     // count the alive cells surrounding a specified cell on the grid 
-    private void CountAliveNeighbourCells(int cellPositionX, int cellPositionY)
+    private int CountAliveNeighbourCells(int cellPositionX, int cellPositionY)
     {
         // create local variable to keep track of alive neighbour cells
         int aliveNeighbourCells = 0;
@@ -222,12 +222,12 @@ public class GameOfLife2D : MonoBehaviour
         //
         // N = neighbour C = cell that's neighbours are being counted
 
-        for (int xPosition = cellPositionX - 1; xPosition < cellPositionX + 2; yPosition++)
+        for (int xPosition = cellPositionX - 1; xPosition < cellPositionX + 2; xPosition++)
         {
             for (int yPosition = cellPositionY - 1; yPosition < cellPositionY + 2; yPosition++)
             {
                 // only continue if the neighbour is valid
-                if (IsNeighbourVa1id(xPosition, yPosition))
+                if (IsNeighbourValid(xPosition, yPosition))
                 {
                     // if the cell is currently alive (1), increase the count of alive neighbours by one
                     if (gameArray[xPosition, yPosition] == 1)
@@ -237,7 +237,7 @@ public class GameOfLife2D : MonoBehaviour
                         // we don't want to check if the specified cell is alive, only its neighbours so it was added, subtract it
                         if (xPosition == cellPositionX && yPosition == cellPositionY)
                         {
-                            aliveNeighbourCells -;
+                            aliveNeighbourCells--;
                         }
                     }
                 }
@@ -270,7 +270,7 @@ public class GameOfLife2D : MonoBehaviour
         gameArrayNextGen = new int[sizeX, sizeY];
 
         // initialise the array of gameobjects that will hold the sprite renderers on the grid
-        cellGameObjects = GameObject[sizeX, sizeY];
+        cellGameObjects = new GameObject[sizeX, sizeY];
 
         // initialise the array of sprite renderers that will visualise the grid
         cellSpriteRenderers = new SpriteRenderer[sizeX, sizeY];
@@ -286,7 +286,7 @@ public class GameOfLife2D : MonoBehaviour
                 newCell.transform.position = new Vector3(xCount, yCount, 0);
 
                 // add a sprite renderer to the cell object and assign the sprite it will use
-                newCell.AddComponent<spriteRenderer>().sprite = cellSprite;
+                newCell.AddComponent<SpriteRenderer>().sprite = cellSprite;
 
                 // add a reference of this sprite renderer to the array so we can change it later quickly
                 cellSpriteRenderers[xCount, yCount] = newCell.GetComponent<SpriteRenderer>();
@@ -295,7 +295,7 @@ public class GameOfLife2D : MonoBehaviour
                 newCell.transform.localScale = new Vector3(7.5f, 7.5f, 0f);
 
                 // add a box collider to the cell so we can detect clicks from the mouse
-                newCell.AddComponen<BoxCollider>();
+                newCell.AddComponent<BoxCollider>();
 
                 // add the gameobject of the cell to the array that stores references of the cell sprites
                 cellGameObjects[xCount, yCount] = newCell;
@@ -327,5 +327,5 @@ public class GameOfLife2D : MonoBehaviour
                 }
             }
         }
-
     }
+}

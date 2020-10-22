@@ -15,26 +15,19 @@ public class ForestFire3D : MonoBehaviour
     public int rockChance; // the percentage chance a cell is assigned as rock
     public int grassChance; // the percentage chance a cell is assigned as grass
 
-    public GameObject cellPrefab; // sprite used to represent a cell on the grid
-    public Text gameRunningText; // text used to display whether the game is running
-    // public int[,] gameArray = new int[0, 0];   // an array to hold the state data for each cell in the grid. int 0 represents dead state, int 1 represents alight state
-    // public int[,] objectArray = new int[0, 0]; // an array to hold the type of object for each cell in the grid. int 0 represents rock, 1 represents grass, 2 represents tree
-    // public int[,] fuelArray = new int[0, 0];   // an array to hold the amount of flammable material for each cell in the grid. 0 represents burnt out or non-flammable (e.g. rocks), >0 means potential to burn
-    // public int[,] gameArrayNextGen = new int[0, 0]; // an array to hold the state data for each cell in the grid for the next generation of the game
+    public GameObject cellPrefab; // gameobject prefab used to represent a cell on the grid   
 
     public ForestFireCell[,] forestFireCells = new ForestFireCell[0, 0]; // array of ForestFireCell objects
     public ForestFireCell.State[,] forestFireCellsNextGenStates = new ForestFireCell.State[0,0]; // array of cell states to be used in the next generation of the game 
 
-
     public GameObject[,] cellGameObjects = new GameObject[0, 0]; // an array to hold references to each gameobject that make up grid
-    public SpriteRenderer[,] cellSpriteRenderers = new SpriteRenderer[0, 0]; // an array to hold references to the sprite renderer component attached to each gameobject
     public bool gameRunning = false; // bool controlling whether the game is currently running
 
     [Range(0.01f, 3f)]
     public float updateRate; // used to define how often will the game update (in seconds)
     private float _gameTimer; // a variable that will be used detect when the game should update 
 
-    private Camera gameCamera; // the game camera pointing at the board
+    private Camera gameCamera; // the camera that is players viewport
 
     // Awake is a built-in Unity function that is only called once, before the Start function
     private void Awake()
@@ -58,15 +51,11 @@ public class ForestFire3D : MonoBehaviour
         // if setGamePause is true the game should stop running
         if (setGamePause)
         {
-            gameRunning = false;
-            gameRunningText.text = "Game Paused";
-            gameRunningText.color = Color.red;
+            gameRunning = false;           
         }
         else // else if setGamePause is false unpause the game
         {
-            gameRunning = true;
-            gameRunningText.text = "Game Running";
-            gameRunningText.color = Color.green;
+            gameRunning = true;          
         }
     }
 
@@ -114,15 +103,12 @@ public class ForestFire3D : MonoBehaviour
     private void RandomiseGrid()
     {
         nlight = 2; // how many trees to set on fire
-                    // iterate through every cell in the cell in the grid and set its state to dead, decide what type of object is present and if flammable assign an amount of fuel
+                      // iterate through every cell in the cell in the grid and set its state to dead, decide what type of object is present and if flammable assign an amount of fuel
+
         for (int xCount = 0; xCount < gridSizeX; xCount++)
         {
             for (int yCount = 0; yCount < gridSizeY; yCount++)
             {
-                // gameArray[xCount, yCount] = 0;  // nothing burning yet, set all objects to dead state
-                // gameArrayNextGen[xCount, yCount] = 0;
-
-               
                 xC = UnityEngine.Random.Range(0, 100); // generate a random number between 0 and 100
 
                 if (xC < rockChance) // if the random value is less than rock chance, assign cell as rock
@@ -186,7 +172,7 @@ public class ForestFire3D : MonoBehaviour
                         forestFireCellsNextGenStates[xCount, yCount] = forestFireCells[xCount, yCount].cellState;
                     }
                 }
-                else if (forestFireCells[xCount, yCount].cellFuel > 0)// the cell has fuel but is not alight yet
+                else if (forestFireCells[xCount, yCount].cellFuel > 0)  // the cell has fuel but is not alight yet
                 {
                     // A dead cell with an alight neighbour which has fuel has a probablility of becoming an alight cell
                     if (alightNeighbourCells > 0)
@@ -194,7 +180,7 @@ public class ForestFire3D : MonoBehaviour
                         xC = UnityEngine.Random.Range(0, 100); // generate a random number between 0 and 100
 
                         if (xC < 10 * alightNeighbourCells) // the more alight neighbours the greater the probability of catching light
-                                                            // e.g. 1 alight neighbour = 10 * 1 = 10% chance of catching fire, 2 alight neighbours = 10 * 2 = 20% chance of catching fire, etc.
+                                                                      // e.g. 1 alight neighbour = 10 * 1 = 10% chance of catching fire, 2 alight neighbours = 10 * 2 = 20% chance of catching fire, etc.
                         {
                             forestFireCellsNextGenStates[xCount, yCount] = ForestFireCell.State.Alight;  // a 10% chance of catching fire
                         }
@@ -274,24 +260,12 @@ public class ForestFire3D : MonoBehaviour
     // this function creates the grid of the game
     private void CreateGrid(int sizeX, int sizeY)
     {
-        // initialise the game and fuel arrays to the size of grid
-        // gameArray = new int[sizeX, sizeY];
-        // objectArray = new int[sizeX, sizeY];
-        // fuelArray = new int[sizeX, sizeY];
-
+        // initialise the game array and array containing their states for the next generation to the size of grid
         forestFireCells = new ForestFireCell[sizeX, sizeY];
-       // forestFireCellsNextGen = new ForestFireCell[sizeX, sizeY];
+        forestFireCellsNextGenStates = new ForestFireCell.State[sizeX, sizeY];
 
-       forestFireCellsNextGenStates = new ForestFireCell.State[sizeX, sizeY];
-
-        // initialise the game array that will contain the state for each cell in the next generation fo the game
-       // gameArrayNextGen = new int[sizeX, sizeY];
-
-        // initialise the array of gameobjects that will hold the sprite renderers on the grid
+        // initialise the array of gameobjects that will hold the game objects on the grid
         cellGameObjects = new GameObject[sizeX, sizeY];
-
-        // initialise the array of sprite renderers that will visualise the grid
-        //cellSpriteRenderers = new SpriteRenderer[sizeX, sizeY];
 
         int xSpacing = 0;
         int ySpacing = 0;
@@ -307,22 +281,7 @@ public class ForestFire3D : MonoBehaviour
                 //position the cell on the grid, spacing them out using the x and y count as coordinates 
                 newCell.transform.position = new Vector3(xCount + xSpacing, 0, yCount + ySpacing);
 
-                // add a sprite renderer to the cell object and assign the sprite it will use
-                //newCell.AddComponent<SpriteRenderer>().sprite = cellSprite;
-
-                // add a reference of this sprite renderer to the array so we can change it later quickly
-                // cellSpriteRenderers[xCount, yCount] = newCell.GetComponent<SpriteRenderer>();
-
-                // the size of the sprite is quite small, so increase the scale so there are no visable gaps in the grid
-                //newCell.transform.localScale = new Vector3(7.5f, 7.5f, 0f);
-
-                // add a box collider to the cell so we can detect clicks from the mouse
-                // newCell.AddComponent<BoxCollider>();
-
-               
-               
-
-                // add the gameobject of the cell to the array that stores references of the cell sprites
+                // add the gameobject of the cell to the array that stores references of the cell gameObjects
                 cellGameObjects[xCount, yCount] = newCell;
 
                 // add to array
@@ -340,7 +299,7 @@ public class ForestFire3D : MonoBehaviour
         }
     }
 
-    // udpate the grid sprites colours according to their current state
+    // udpate the grid cells according to their current state
     // this function will be called every frame of the game so the grid is always up to date 
     private void UpdateGridVisuals()
     {
