@@ -5,3 +5,4 @@ Assembly-CSharp.csproj
 *.csproj
 GameOfLife.sln
 /Temp
+/.vs/GameOfLife/v16/.suo

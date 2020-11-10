@@ -183,7 +183,7 @@ public class GameOfLife2D : MonoBehaviour
                 }
                 else // the cell is currently dead
                 {
-                    // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+                    // Any dead cell with exactly three live neighbours becomes an alive cell, as if by reproduction.
                     if (aliveNeighbourCells == 3)
                     {
                         gameArrayNextGen[xCount, yCount] = 1;
@@ -234,7 +234,7 @@ public class GameOfLife2D : MonoBehaviour
                     {
                         aliveNeighbourCells++;
 
-                        // we don't want to check if the specified cell is alive, only its neighbours so it was added, subtract it
+                        // we don't want to check if the specified cell is alive, only its neighbours so if it was added, subtract it
                         if (xPosition == cellPositionX && yPosition == cellPositionY)
                         {
                             aliveNeighbourCells--;

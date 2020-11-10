@@ -555,7 +555,6 @@ MonoBehaviour:
   grassChance: 40
   cellPrefab: {fileID: 8517016399536926406, guid: bd5b6afb2ea580946a81c949556e036e,
     type: 3}
-  gameRunningText: {fileID: 0}
   gameRunning: 0
   updateRate: 1
 --- !u!4 &277846092 stripped

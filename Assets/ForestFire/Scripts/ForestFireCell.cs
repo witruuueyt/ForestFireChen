@@ -46,6 +46,21 @@ public class ForestFireCell : MonoBehaviour
         groundMeshRenderer = GetComponent<MeshRenderer>(); // get reference to this cell's mesh renderer
     }
 
+    // reset anything that was turned on by a different cell 
+    private void ResetCell()
+    {
+        // turn off the tree and rock objects
+        treeObject.SetActive(false);
+        rockObject.SetActive(false);
+
+        // destroy the fire effect if it exists
+        if (currentFire != null)
+        {
+            Destroy(currentFire);
+        }
+
+    }
+
     // Update is a built-in Unity function that is called once per frame 
     private void Update()
     {
@@ -53,7 +68,7 @@ public class ForestFireCell : MonoBehaviour
         if (currentFire != null)
         {
             // enable vfx effect if player is within specified distance
-            if (Vector3.Distance(transform.position, playerCamera.transform.position) > fireVFXDistance) 
+            if (Vector3.Distance(transform.position, playerCamera.transform.position) > fireVFXDistance)
             {
                 if (_fireVisualEffect.enabled == true)
                     _fireVisualEffect.enabled = false;
@@ -69,30 +84,30 @@ public class ForestFireCell : MonoBehaviour
     // change cell state to tree
     public void SetTree()
     {
+        ResetCell();
         cellState = State.Tree;
         groundMeshRenderer.material = groundMaterialTree;
+        leaves.SetActive(true);
         treeObject.SetActive(true);
     }
 
     // change cell state to grass    
     public void SetGrass()
     {
+        ResetCell();
         cellState = State.Grass;
         groundMeshRenderer.material = groundMaterialGrass;
-        treeObject.SetActive(false);
-        rockObject.SetActive(false);
     }
 
     // change cell state to rock
     public void SetRock()
     {
-        if (cellState != State.Rock)
-        {
-            cellState = State.Rock;
-            cellFuel = 0;
-            groundMeshRenderer.material = groundMaterialRock;
-            rockObject.SetActive(true);
-        }
+        ResetCell();
+        cellState = State.Rock;
+        cellFuel = 0;
+        groundMeshRenderer.material = groundMaterialRock;
+        rockObject.SetActive(true);
+
     }
 
     // set cell alight
@@ -113,6 +128,7 @@ public class ForestFireCell : MonoBehaviour
             {
                 currentFire = Instantiate(grassFireFVX);
                 currentFire.transform.SetParent(gameObject.transform, true);
+                currentFire.transform.localPosition = Vector3.zero;
             }
             // get a reference to the vfx component on the current fire object
             _fireVisualEffect = currentFire.GetComponent<VisualEffect>();
