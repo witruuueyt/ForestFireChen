@@ -159,7 +159,7 @@ public class ForestFire3D : MonoBehaviour
 
                 if (forestFireCells[xCount, yCount].cellState == ForestFireCell.State.Alight) // if the cell is currently alight let it burn but reduce it's fuel and see if it goes out
                 {
-                     forestFireCells[xCount, yCount].cellFuel--; // reduce fuel by 1 (-- operater reduces an integer by 1)
+                     forestFireCells[xCount, yCount].cellFuel--; // reduce fuel by 1 (-- operator reduces an integer by 1)
 
 
                     if (forestFireCells[xCount, yCount].cellFuel <= 0) // has it burned all its fuel?
@@ -174,7 +174,7 @@ public class ForestFire3D : MonoBehaviour
                 }
                 else if (forestFireCells[xCount, yCount].cellFuel > 0)  // the cell has fuel but is not alight yet
                 {
-                    // A dead cell with an alight neighbour which has fuel has a probablility of becoming an alight cell
+                    // A dead cell with an alight neighbour which has fuel has a probability of becoming an alight cell
                     if (alightNeighbourCells > 0)
                     {
                         xC = UnityEngine.Random.Range(0, 100); // generate a random number between 0 and 100
@@ -185,10 +185,14 @@ public class ForestFire3D : MonoBehaviour
                             forestFireCellsNextGenStates[xCount, yCount] = ForestFireCell.State.Alight;  // a 10% chance of catching fire
                         }
                     }
-                    else // no neighbours on fire, keep it dead for the next generation of the game
+                    else // no neighbours on fire. use the current state of the cell for the next generation of the game.
                     {
                         forestFireCellsNextGenStates[xCount, yCount] = forestFireCells[xCount, yCount].cellState;
                     }
+                }
+                else // this cell has 0 fuel, so has either burnt out or is a cell which cant be burnt (rock), use the current state of the cell for the next generation of the game.
+                {
+                    forestFireCellsNextGenStates[xCount, yCount] = forestFireCells[xCount, yCount].cellState;
                 }
             }
         }

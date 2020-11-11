@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.VFX;
 
-// class that reperesents a single cell in the cellular automaton
+// class that represents a single cell in the cellular automaton
 // contains data about the cell and methods to change its visual appearance
 public class ForestFireCell : MonoBehaviour
 {
