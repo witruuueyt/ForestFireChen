@@ -61,7 +61,7 @@ public class GameOfLife2D : MonoBehaviour
     private void Update()
     {
         //Check for left click to switch the state of the cell being clicked on
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
             RaycastHit hit;
             if (Physics.Raycast(gameCamera.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 100.0f))
