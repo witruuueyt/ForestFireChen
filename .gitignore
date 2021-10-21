@@ -6,3 +6,7 @@ Assembly-CSharp.csproj
 GameOfLife.sln
 /Temp
 /.vs/GameOfLife/v16/.suo
+/.vs
+/Logs
+/Logs/Packages-Update.log
+/.vsconfig

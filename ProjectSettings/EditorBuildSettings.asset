@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/ForestFire/Scenes/ForestFire3D.unity
     guid: bdfaffa30ba9dc844afffb78261241c8
   m_configObjects:
-    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: c8e652a12aee94d40a18364e3c177aa8,
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: cc9d5552ba6b55642b1f810556cfdcdf,
       type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bb04fe72e62d5a547862d752bcedb431,
       type: 2}

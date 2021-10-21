@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class ForestFire2D : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class ForestFire2D : MonoBehaviour
     {
 
         // check if the spacebar key has been pressed. this key will toggle between whether the game is currently running or paused
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
         {
             // if the gameRunning is true, pause the game
             if (gameRunning)
@@ -79,8 +80,8 @@ public class ForestFire2D : MonoBehaviour
         }
 
 
-        // check if the R key has been pressed. this key will clear the grid and pause the game
-        if (Input.GetKeyDown(KeyCode.R))
+        // check if the R key has been pressed. this key will randomise the grid
+        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             nlight = 2; // how many trees to set on fire
             // iterate through every cell in the cell in the grid and set its state to dead, decide what type of object is present and if flammable assign an amount of fuel
