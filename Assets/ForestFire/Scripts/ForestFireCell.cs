@@ -11,6 +11,7 @@ public class ForestFireCell : MonoBehaviour
     public State cellState; // this variable stores the state of the cell as an enum defined below 
     public enum State
     {
+        None,
         Tree,
         Grass,
         Alight,
@@ -82,8 +83,14 @@ public class ForestFireCell : MonoBehaviour
     }
 
     // change cell state to tree
+    // a grass cell will never go back to tree from another state 
+    // so we can check to see if the tree has material has been set aleady and skip changing it again to save on performance
     public void SetTree()
     {
+        if (groundMeshRenderer.sharedMaterial == groundMaterialTree)
+            return;
+
+        // this code below wont run once the tree material has been set
         ResetCell();
         cellState = State.Tree;
         groundMeshRenderer.material = groundMaterialTree;
@@ -92,22 +99,33 @@ public class ForestFireCell : MonoBehaviour
     }
 
     // change cell state to grass    
+    // a grass cell will never go back to grass from another state 
+    // so we can check to see if the grass has material has been set aleady and skip changing it again to save on performance
     public void SetGrass()
     {
+        if (groundMeshRenderer.sharedMaterial == groundMaterialGrass)
+            return;
+
+        // this code below wont run once the grass material has been set
         ResetCell();
         cellState = State.Grass;
         groundMeshRenderer.material = groundMaterialGrass;
     }
 
     // change cell state to rock
+    // once a cell is set to rock state will never change
+    // so we can check to see if the rock has material has been set aleady and never alter it again to save on performance
     public void SetRock()
     {
+        if (groundMeshRenderer.sharedMaterial == groundMaterialRock)
+            return;
+
+        // this code below wont run once the rock material has been set
         ResetCell();
         cellState = State.Rock;
         cellFuel = 0;
-        groundMeshRenderer.material = groundMaterialRock;
-        rockObject.SetActive(true);
-
+        groundMeshRenderer.material = groundMaterialRock; // sets the cell material to rock
+        rockObject.SetActive(true); 
     }
 
     // set cell alight
@@ -115,6 +133,7 @@ public class ForestFireCell : MonoBehaviour
     {
         cellState = State.Alight;
 
+        // check if a fire has assigned 
         if (currentFire == null)
         {
             // check whether tree object is active on this cell. if so assign the fire vfx as the current fire object

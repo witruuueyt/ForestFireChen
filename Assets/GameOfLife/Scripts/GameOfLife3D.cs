@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 // class that controls the forest fire cellular automaton
 public class GameOfLife3D : MonoBehaviour
@@ -56,7 +57,7 @@ public class GameOfLife3D : MonoBehaviour
     private void Update()
     {
         // check if the spacebar key has been pressed. this key will toggle between whether the game is currently running or paused
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             // if the gameRunning is true, pause the game
             if (gameRunning)
@@ -70,7 +71,7 @@ public class GameOfLife3D : MonoBehaviour
         }
 
         // check if the R key has been pressed. this key will clear the grid and pause the game
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Keyboard.current.rKey.wasPressedThisFrame)
         {
             RandomiseGrid();
         }

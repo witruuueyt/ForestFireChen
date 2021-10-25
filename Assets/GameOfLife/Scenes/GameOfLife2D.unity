@@ -474,15 +474,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 700195145}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df8432d81f9bdf848bc2cdc00cc11072, type: 3}
+  m_Script: {fileID: 11500000, guid: e7753e5b34315dc41ba1055939def2af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gridSizeX: 50
   gridSizeY: 50
-  cellSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  cellSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   gameRunningText: {fileID: 297255195}
   gameRunning: 0
-  updateRate: 0.1
+  updateRate: 0.15
 --- !u!4 &700195147
 Transform:
   m_ObjectHideFlags: 0
