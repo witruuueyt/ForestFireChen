@@ -479,10 +479,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridSizeX: 50
   gridSizeY: 50
-  cellSprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  cellSprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   gameRunningText: {fileID: 297255195}
   gameRunning: 0
-  updateRate: 0.15
+  updateRate: 0.125
 --- !u!4 &700195147
 Transform:
   m_ObjectHideFlags: 0
