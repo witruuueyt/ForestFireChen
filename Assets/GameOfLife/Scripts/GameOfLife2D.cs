@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using System.Drawing;
+using UnityEngine.UIElements;
 
 public class GameOfLife2D : MonoBehaviour
 {
@@ -61,7 +63,7 @@ public class GameOfLife2D : MonoBehaviour
     private void Update()
     {
         //Check for left click to switch the state of the cell being clicked on
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Input.GetMouseButtonDown(0))
         {
             RaycastHit hit;
             if (Physics.Raycast(gameCamera.ScreenPointToRay(Mouse.current.position.ReadValue()), out hit, 100.0f))
