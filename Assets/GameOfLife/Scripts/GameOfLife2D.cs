@@ -9,6 +9,7 @@ using UnityEngine.UIElements;
 
 public class GameOfLife2D : MonoBehaviour
 {
+    //test
     public int gridSizeX; // x size of the grid
     public int gridSizeY; // y size of the grid
    
