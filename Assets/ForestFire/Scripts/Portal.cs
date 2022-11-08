@@ -31,7 +31,7 @@ public class Portal : MonoBehaviour
             Debug.Log("portal ");
             player.transform.position = fooled.position;
             //firstEndingPanel.SetActive(true);
-            audio.Play();
+            //audio.Play();
         }
 
 
