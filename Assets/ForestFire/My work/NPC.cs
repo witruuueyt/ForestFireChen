@@ -11,6 +11,8 @@ public class NPC : MonoBehaviour
     public GameObject text2;
 
     public GameObject text3;
+
+    public GameObject dialog;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +31,7 @@ public class NPC : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Debug.Log("start text1");
         text1.SetActive(true);
+        dialog.SetActive(true);
 
         yield return new WaitForSeconds(5f);
         text1.SetActive(false);

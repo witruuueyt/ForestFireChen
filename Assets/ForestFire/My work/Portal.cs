@@ -42,13 +42,14 @@ public class Portal : MonoBehaviour
 
     public IEnumerator NeverCoroutine()
     {
-        yield return new WaitForSeconds(3f);
         Debug.Log("Time down");
-
-        audio.Play();
-        Debug.Log("music");
+        yield return new WaitForSeconds(7f);
         firstEndingPanel.SetActive(true);
         Debug.Log("panel");
+        yield return new WaitForSeconds(1f);
+        audio.Play();
+        Debug.Log("music");
+        
     }
 
 }
