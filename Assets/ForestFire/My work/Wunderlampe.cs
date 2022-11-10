@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wunderlampe : MonoBehaviour
 {
-    public GameObject Dschinn;
+    public GameObject Sprite;
     // Start is called before the first frame update
     void Start()
     {
@@ -15,5 +15,14 @@ public class Wunderlampe : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Debug.Log("trigger");
+            Sprite.SetActive(true);
+        }
     }
 }

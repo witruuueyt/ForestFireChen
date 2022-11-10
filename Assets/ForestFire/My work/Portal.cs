@@ -34,11 +34,6 @@ public class Portal : MonoBehaviour
 
             StartCoroutine(NeverCoroutine());
             
-            //System.Timers.Timer time = new System.Timers.Timer(3000);//实例化Timer类，规定每隔3秒执行一次
-            //time.Elapsed += new System.Timers.ElapsedEventHandler(Never);//当达到规定的时间内执行aa 这个方法
-            //time.AutoReset = false;//false 执行一次，true 一直执行
-            //time.Enabled = true;//设置是否执行time.Elapsed 时间
-
         }
 
 
@@ -50,19 +45,10 @@ public class Portal : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Debug.Log("Time down");
 
-        //audio.Play();
+        audio.Play();
         Debug.Log("music");
         firstEndingPanel.SetActive(true);
         Debug.Log("panel");
     }
 
-    //private void Never(object source, System.Timers.ElapsedEventArgs e)
-    //{
-    //    Debug.Log("Time down");
-        
-    //    audio.Play();
-    //    Debug.Log("music");
-    //    firstEndingPanel.SetActive(true);
-    //    Debug.Log("panel");
-    //}
 }
