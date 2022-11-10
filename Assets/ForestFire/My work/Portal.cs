@@ -43,7 +43,7 @@ public class Portal : MonoBehaviour
     public IEnumerator NeverCoroutine()
     {
         Debug.Log("Time down");
-        yield return new WaitForSeconds(7f);
+        yield return new WaitForSeconds(6f);
         firstEndingPanel.SetActive(true);
         Debug.Log("panel");
         yield return new WaitForSeconds(1f);
