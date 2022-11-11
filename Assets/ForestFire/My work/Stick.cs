@@ -12,16 +12,18 @@ public class Stick : MonoBehaviour
 
     private bool isFireActive;
 
-    public bool isBonfireActive;
+    private bool isBonfireActive;
 
     public GameObject lid;
 
-    public Rigidbody lidRigidbody;
+    private Rigidbody lidRigidbody;
 
-    public int test;
+    private new AudioSource audio;
+
+    
     void Start()
     {
-        test = 1;
+        audio = GetComponent<AudioSource>();
         isFireActive = false;
         isBonfireActive = false;
     }
@@ -58,7 +60,7 @@ public class Stick : MonoBehaviour
     {
         lidRigidbody = lid.GetComponent<Rigidbody>();
         yield return new WaitForSeconds(5f);
-
+        audio.Play();
         lidRigidbody.AddForce(Vector3.up * 70);
     }
    
