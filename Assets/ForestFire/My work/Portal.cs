@@ -5,18 +5,18 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
-    public Transform player;
+    public Transform player; //get the player object
 
-    public Transform fooled;
+    public Transform fooled; //get the transform object
 
-    public GameObject firstEndingPanel;
+    public GameObject firstEndingPanel; // get the ending panel
 
-    private new AudioSource audio;
+    private new AudioSource audio; //Audio source component
 
-    
+
     void Start()
     {
-        audio = GetComponent<AudioSource>();
+        audio = GetComponent<AudioSource>(); // get the Audio source component
     }
 
     
@@ -27,12 +27,12 @@ public class Portal : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == ("Player"))
+        if (other.tag == ("Player")) //check the trigger object's tag
         {
             Debug.Log("portal ");
-            player.transform.position = fooled.position;
+            player.transform.position = fooled.position;//teleport player
 
-            StartCoroutine(NeverCoroutine());
+            StartCoroutine(NeverCoroutine()); // start a time down
             
         }
 
@@ -43,11 +43,11 @@ public class Portal : MonoBehaviour
     public IEnumerator NeverCoroutine()
     {
         Debug.Log("Time down");
-        yield return new WaitForSeconds(6f);
-        firstEndingPanel.SetActive(true);
+        yield return new WaitForSeconds(6f); //wait 6 seconds
+        firstEndingPanel.SetActive(true); //set ending panel to active
         Debug.Log("panel");
-        yield return new WaitForSeconds(1f);
-        audio.Play();
+        yield return new WaitForSeconds(1f); //wait 1 second
+        audio.Play(); //play music
         Debug.Log("music");
         
     }

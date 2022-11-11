@@ -7,6 +7,6 @@ public class Reset : MonoBehaviour
     
     public void Click()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(0); //reload the game
     }
 }
